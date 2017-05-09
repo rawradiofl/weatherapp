@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  RainShineCloudVC.swift
 //  RainShineCloud
 //
 //  Created by Scott Martin on 5/9/17.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class WeatherVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
