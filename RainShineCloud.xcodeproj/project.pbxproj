@@ -13,6 +13,8 @@
 		F04FB5941EC25D2C00CE3FCD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F04FB5921EC25D2C00CE3FCD /* Main.storyboard */; };
 		F04FB5961EC25D2C00CE3FCD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F04FB5951EC25D2C00CE3FCD /* Assets.xcassets */; };
 		F04FB5991EC25D2C00CE3FCD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F04FB5971EC25D2C00CE3FCD /* LaunchScreen.storyboard */; };
+		F0F3B2591EC29F4F0008DBEF /* WeatherQueryBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F3B2581EC29F4F0008DBEF /* WeatherQueryBuilder.swift */; };
+		F0F3B25C1EC2AA650008DBEF /* CurrentWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F3B25B1EC2AA650008DBEF /* CurrentWeather.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +28,8 @@
 		F04FB5951EC25D2C00CE3FCD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F04FB5981EC25D2C00CE3FCD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F04FB59A1EC25D2C00CE3FCD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F0F3B2581EC29F4F0008DBEF /* WeatherQueryBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherQueryBuilder.swift; sourceTree = "<group>"; };
+		F0F3B25B1EC2AA650008DBEF /* CurrentWeather.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentWeather.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,14 +82,11 @@
 		F04FB58D1EC25D2C00CE3FCD /* RainShineCloud */ = {
 			isa = PBXGroup;
 			children = (
+				F0F3B25A1EC2A94D0008DBEF /* Supporting Files */,
 				F04FB5A21EC25E3100CE3FCD /* Controller */,
 				F04FB5A11EC25DE900CE3FCD /* Model */,
 				F04FB5A01EC25DCD00CE3FCD /* View */,
-				F04FB58E1EC25D2C00CE3FCD /* AppDelegate.swift */,
 				F04FB5921EC25D2C00CE3FCD /* Main.storyboard */,
-				F04FB5951EC25D2C00CE3FCD /* Assets.xcassets */,
-				F04FB5971EC25D2C00CE3FCD /* LaunchScreen.storyboard */,
-				F04FB59A1EC25D2C00CE3FCD /* Info.plist */,
 			);
 			path = RainShineCloud;
 			sourceTree = "<group>";
@@ -100,6 +101,7 @@
 		F04FB5A11EC25DE900CE3FCD /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				F0F3B25B1EC2AA650008DBEF /* CurrentWeather.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -110,6 +112,18 @@
 				F04FB5901EC25D2C00CE3FCD /* WeatherVC.swift */,
 			);
 			name = Controller;
+			sourceTree = "<group>";
+		};
+		F0F3B25A1EC2A94D0008DBEF /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				F04FB5951EC25D2C00CE3FCD /* Assets.xcassets */,
+				F04FB5971EC25D2C00CE3FCD /* LaunchScreen.storyboard */,
+				F04FB59A1EC25D2C00CE3FCD /* Info.plist */,
+				F04FB58E1EC25D2C00CE3FCD /* AppDelegate.swift */,
+				F0F3B2581EC29F4F0008DBEF /* WeatherQueryBuilder.swift */,
+			);
+			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -238,6 +252,8 @@
 			files = (
 				F04FB5911EC25D2C00CE3FCD /* WeatherVC.swift in Sources */,
 				F04FB58F1EC25D2C00CE3FCD /* AppDelegate.swift in Sources */,
+				F0F3B25C1EC2AA650008DBEF /* CurrentWeather.swift in Sources */,
+				F0F3B2591EC29F4F0008DBEF /* WeatherQueryBuilder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -405,6 +421,7 @@
 				F04FB59F1EC25D2C00CE3FCD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

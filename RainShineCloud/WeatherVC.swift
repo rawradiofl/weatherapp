@@ -17,11 +17,23 @@ class WeatherVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var currentConditionsLabel: UILabel!
     @IBOutlet weak var forcastTableView: UITableView!
 
+    var currentWeather: CurrentWeather!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         forcastTableView.delegate = self
         forcastTableView.dataSource = self
         
+        currentWeather = CurrentWeather()
+        currentWeather.downLoadWeatherDetails { [weak self] in
+            self?.updateMainUI()
+        }
+
+        
+    }
+    
+    override func viewDidLayoutSubviews() {
+
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -37,7 +49,17 @@ class WeatherVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
-    
+    func updateMainUI() {
+        dateLabel.text = currentWeather.date
+        let numberFormatter = NumberFormatter()
+        numberFormatter.numberStyle = .decimal
+        numberFormatter.maximumFractionDigits = 2
+        if let value = numberFormatter.string(from: NSNumber(value: currentWeather.currentTemp)) {
+            currentTempLabel.text = value + "°"        }
+        currentConditionsLabel.text = currentWeather.weatherType
+        locationLabel.text = currentWeather.cityName
+        currentConditionsImage.image = UIImage(named: currentWeather.weatherType)
+    }
     
     
     
