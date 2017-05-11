@@ -43,12 +43,14 @@ class CurrentWeather {
         return _weatherType
     }
     
-    var currentTemp: Double {
+    var currentTemp: String? {
         if _currentTemp == nil {
             _currentTemp = 0.0
         }
-
-        return _currentTemp
+        let numberFormatter = NumberFormatter()
+        numberFormatter.numberStyle = .decimal
+        numberFormatter.maximumFractionDigits = 2
+        return numberFormatter.string(from: NSNumber(value: _currentTemp))
     }
     
     func downLoadWeatherDetails(completed: @escaping DownloadComplete) {
@@ -56,18 +58,18 @@ class CurrentWeather {
             // Alamofire download
             Alamofire.request(currentWeatherURL).responseJSON { [weak self] response in
                 let result = response.result
-                if let dict = result.value as? Dictionary<String, AnyObject> {
+                if let dict = result.value as? Dictionary<String, Any> {
                     if let name = dict["name"] as? String {
                         self?._cityName = name.capitalized
                         //print(self?._cityName)
                     }
-                    if let weather = dict["weather"] as? [Dictionary<String, AnyObject>] {
+                    if let weather = dict["weather"] as? [Dictionary<String, Any>] {
                         if let main = weather[0]["main"] as? String {
                             self?._weatherType = main.capitalized
                             //print("\(self?.weatherType)")
                         }
                     }
-                    if let main = dict["main"] as? Dictionary<String, AnyObject> {
+                    if let main = dict["main"] as? Dictionary<String, Any> {
                         if let currentTemperature = main["temp"] as? Double {
                             let kelvinToFarenheit = ((currentTemperature - 273) * (9/5)) + 32
                             self?._currentTemp = kelvinToFarenheit
