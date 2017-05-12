@@ -94,7 +94,6 @@ class WeatherVC: UIViewController, UITableViewDelegate, UITableViewDataSource, C
                             let forecast = Forecast(forecastDict: obj)
                             if let theDate = forecast.date, theDate > Date() {
                                 if let count = self?.forecasts.count, count < 10 {
-                                    print(theDate)
                                     self?.forecasts.append(forecast)
                                 }
                             }
