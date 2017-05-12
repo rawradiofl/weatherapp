@@ -54,7 +54,7 @@ class CurrentWeather {
     }
     
     func downLoadWeatherDetails(completed: @escaping DownloadComplete) {
-        if let url = WeatherQueryBuilder(latitude: 25, longitude: -80).weatherURL, let currentWeatherURL = URL(string: url) {
+        if let url = WeatherQueryBuilder(latitude: Location.sharedInstance.latitude, longitude: Location.sharedInstance.longitude).weatherURL, let currentWeatherURL = URL(string: url) {
             // Alamofire download
             Alamofire.request(currentWeatherURL).responseJSON { [weak self] response in
                 let result = response.result

@@ -7,9 +7,10 @@
 //
 
 import UIKit
+import CoreLocation
 import Alamofire
 
-class WeatherVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class WeatherVC: UIViewController, UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate {
 
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var currentTempLabel: UILabel!
@@ -17,15 +18,23 @@ class WeatherVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var currentConditionsImage: UIImageView!
     @IBOutlet weak var currentConditionsLabel: UILabel!
     @IBOutlet weak var forecastTableView: UITableView!
+    
+    let locationManager = CLLocationManager()
+    var currentLocation: CLLocation!
 
     var currentWeather: CurrentWeather!
     var forecasts = [Forecast]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        locationManager.delegate = self
         forecastTableView.delegate = self
         forecastTableView.dataSource = self
         
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startMonitoringSignificantLocationChanges()
+        locationAuthStatus()
         currentWeather = CurrentWeather()
         currentWeather.downLoadWeatherDetails { [weak self] in
             self?.downloadForecastData {
@@ -33,6 +42,11 @@ class WeatherVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             }
             
         }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
     }
     
     override func viewDidLayoutSubviews() {
@@ -61,7 +75,7 @@ class WeatherVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     func updateMainUI() {
         dateLabel.text = currentWeather.date
         if let tempValue = currentWeather.currentTemp {
-            currentTempLabel.text = tempValue
+            currentTempLabel.text = tempValue + "°"
         }
         currentConditionsLabel.text = currentWeather.weatherType
         locationLabel.text = currentWeather.cityName
@@ -71,7 +85,7 @@ class WeatherVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     func downloadForecastData(completed: @escaping DownloadComplete) {
         // Download forecast weaather data for tableview
-        if let forecastURL = WeatherQueryBuilder(latitude: 25, longitude: -80).forecastURL {
+        if let forecastURL = WeatherQueryBuilder(latitude: Location.sharedInstance.latitude, longitude: Location.sharedInstance.longitude).forecastURL {
             Alamofire.request(forecastURL).responseJSON { [weak self] response in
                 let result = response.result
                 if let dict = result.value as? Dictionary<String, Any> {
@@ -89,6 +103,17 @@ class WeatherVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 }
                 completed()
             }
+        }
+    }
+    
+    func locationAuthStatus() {
+        if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
+            currentLocation = locationManager.location
+            Location.sharedInstance.latitude = currentLocation.coordinate.latitude
+            Location.sharedInstance.longitude = currentLocation.coordinate.longitude
+        } else {
+            locationManager.requestWhenInUseAuthorization()
+            locationAuthStatus()
         }
     }
 }

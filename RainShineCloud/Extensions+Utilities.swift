@@ -17,6 +17,7 @@ func formatTemperature(from temperature: Double) -> String? {
     let numberFormatter = NumberFormatter()
     numberFormatter.numberStyle = .decimal
     numberFormatter.maximumFractionDigits = 2
+    numberFormatter.minimumFractionDigits = 2
     return numberFormatter.string(from: NSNumber(value: temperature))
 }
 
