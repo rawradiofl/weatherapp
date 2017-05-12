@@ -24,7 +24,9 @@ class WeatherVC: UIViewController, UITableViewDelegate, UITableViewDataSource, C
 
     var currentWeather: CurrentWeather!
     var forecasts = [Forecast]()
-    
+
+
+    //MARK: - Application lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         locationManager.delegate = self
@@ -49,7 +51,8 @@ class WeatherVC: UIViewController, UITableViewDelegate, UITableViewDataSource, C
     override func viewDidLayoutSubviews() {
 
     }
-    
+
+    //MARK: - TableView
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -68,7 +71,8 @@ class WeatherVC: UIViewController, UITableViewDelegate, UITableViewDataSource, C
         }
         
     }
-    
+
+    //MARK: - UI
     func updateMainUI() {
         dateLabel.text = currentWeather.date
         if let tempValue = currentWeather.currentTemp {
@@ -79,7 +83,8 @@ class WeatherVC: UIViewController, UITableViewDelegate, UITableViewDataSource, C
         currentConditionsImage.image = UIImage(named: currentWeather.weatherType)
         forecastTableView.reloadData()
     }
-    
+
+    //MARK: - Forecast handling
     func downloadForecastData(completed: @escaping DownloadComplete) {
         // Download forecast weaather data for tableview
         if let forecastURL = WeatherQueryBuilder(latitude: Location.sharedInstance.latitude, longitude: Location.sharedInstance.longitude).forecastURL {
@@ -101,7 +106,8 @@ class WeatherVC: UIViewController, UITableViewDelegate, UITableViewDataSource, C
             }
         }
     }
-    
+
+    // MARK: - Location
     func determineLocation() {
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestWhenInUseAuthorization()
