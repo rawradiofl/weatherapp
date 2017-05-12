@@ -30,23 +30,20 @@ class WeatherVC: UIViewController, UITableViewDelegate, UITableViewDataSource, C
         locationManager.delegate = self
         forecastTableView.delegate = self
         forecastTableView.dataSource = self
-        
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.startMonitoringSignificantLocationChanges()
-        locationAuthStatus()
         currentWeather = CurrentWeather()
+
+    }
+
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        determineLocation()
         currentWeather.downLoadWeatherDetails { [weak self] in
             self?.downloadForecastData {
                 self?.updateMainUI()
             }
-            
+
         }
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
     }
     
     override func viewDidLayoutSubviews() {
@@ -105,15 +102,27 @@ class WeatherVC: UIViewController, UITableViewDelegate, UITableViewDataSource, C
         }
     }
     
-    func locationAuthStatus() {
-        if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
-            currentLocation = locationManager.location
-            Location.sharedInstance.latitude = currentLocation.coordinate.latitude
-            Location.sharedInstance.longitude = currentLocation.coordinate.longitude
-        } else {
-            locationManager.requestWhenInUseAuthorization()
-            locationAuthStatus()
+    func determineLocation() {
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.requestWhenInUseAuthorization()
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.startUpdatingLocation()
+            if let location = locationManager.location {
+                Location.sharedInstance.latitude = location.coordinate.latitude
+                Location.sharedInstance.longitude = location.coordinate.longitude
+            }
         }
+
+    }
+
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let userLocation = locations[0] as CLLocation
+        Location.sharedInstance.latitude =  userLocation.coordinate.latitude
+        Location.sharedInstance.longitude = userLocation.coordinate.longitude
+    }
+
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print("Error: \(error)")
     }
 }
 
