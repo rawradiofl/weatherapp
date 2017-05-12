@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 
 class WeatherVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
@@ -15,21 +16,23 @@ class WeatherVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var currentConditionsImage: UIImageView!
     @IBOutlet weak var currentConditionsLabel: UILabel!
-    @IBOutlet weak var forcastTableView: UITableView!
+    @IBOutlet weak var forecastTableView: UITableView!
 
     var currentWeather: CurrentWeather!
+    var forecasts = [Forecast]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        forcastTableView.delegate = self
-        forcastTableView.dataSource = self
+        forecastTableView.delegate = self
+        forecastTableView.dataSource = self
         
         currentWeather = CurrentWeather()
         currentWeather.downLoadWeatherDetails { [weak self] in
-            self?.updateMainUI()
+            self?.downloadForecastData {
+                self?.updateMainUI()
+            }
+            
         }
-
-        
     }
     
     override func viewDidLayoutSubviews() {
@@ -41,12 +44,18 @@ class WeatherVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 6
+        return forecasts.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Day Cell", for: indexPath)
-        return cell
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "Day Cell", for: indexPath) as? ForecastTableViewCell {
+            let forecast = forecasts[indexPath.row]
+            cell.configureCell(withForecast: forecast)
+            return cell
+        } else {
+            return ForecastTableViewCell()
+        }
+        
     }
     
     func updateMainUI() {
@@ -57,11 +66,26 @@ class WeatherVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         currentConditionsLabel.text = currentWeather.weatherType
         locationLabel.text = currentWeather.cityName
         currentConditionsImage.image = UIImage(named: currentWeather.weatherType)
+        forecastTableView.reloadData()
     }
     
-    
-    
-    
-
+    func downloadForecastData(completed: @escaping DownloadComplete) {
+        // Download forecast weaather data for tableview
+        if let forecastURL = WeatherQueryBuilder(latitude: 25, longitude: -80).forecastURL {
+            Alamofire.request(forecastURL).responseJSON { [weak self] response in
+                let result = response.result
+                if let dict = result.value as? Dictionary<String, Any> {
+                    if let list = dict["list"] as? [Dictionary<String, Any>] {
+                        for obj in list {
+                            let forecast = Forecast(forecastDict: obj)
+                            self?.forecasts.append(forecast)
+                            //print(obj)
+                        }
+                    }
+                }
+                completed()
+            }
+        }
+    }
 }
 

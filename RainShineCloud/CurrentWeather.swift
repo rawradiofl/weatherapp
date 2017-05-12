@@ -54,7 +54,7 @@ class CurrentWeather {
     }
     
     func downLoadWeatherDetails(completed: @escaping DownloadComplete) {
-        if let url = WeatherQueryBuilder(latitude: 25, longitude: -80).latLonURL, let currentWeatherURL = URL(string: url) {
+        if let url = WeatherQueryBuilder(latitude: 25, longitude: -80).weatherURL, let currentWeatherURL = URL(string: url) {
             // Alamofire download
             Alamofire.request(currentWeatherURL).responseJSON { [weak self] response in
                 let result = response.result
@@ -71,10 +71,7 @@ class CurrentWeather {
                     }
                     if let main = dict["main"] as? Dictionary<String, Any> {
                         if let currentTemperature = main["temp"] as? Double {
-                            let kelvinToFarenheit = ((currentTemperature - 273) * (9/5)) + 32
-                            self?._currentTemp = kelvinToFarenheit
-                            //print(self?.currentTemp)
-                        }
+                            self?._currentTemp = kelvinToFarenheit(from: currentTemperature)                                                    }
                     }
                 }
                 completed()
@@ -82,7 +79,7 @@ class CurrentWeather {
         }
     }
     
-    
+
     
     
 }

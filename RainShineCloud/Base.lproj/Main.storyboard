@@ -35,8 +35,8 @@
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="80.3° " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="32" translatesAutoresizingMaskIntoConstraints="NO" id="bTS-GJ-alK">
-                                                <rect key="frame" x="0.0" y="42.5" width="151" height="145"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="32" translatesAutoresizingMaskIntoConstraints="NO" id="bTS-GJ-alK">
+                                                <rect key="frame" x="0.0" y="42.5" width="35.5" height="145"/>
                                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="55"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
@@ -87,7 +87,7 @@
                                 <rect key="frame" x="0.0" y="250" width="320" height="318"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="Day Cell" rowHeight="80" id="iXN-oe-vZ1">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="Day Cell" rowHeight="80" id="iXN-oe-vZ1" customClass="ForecastTableViewCell" customModule="RainShineCloud" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="320" height="80"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="iXN-oe-vZ1" id="oXu-0P-ZjT">
@@ -152,6 +152,13 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                        <connections>
+                                            <outlet property="dayLabel" destination="Ztm-uh-09I" id="Qt5-8T-Gqq"/>
+                                            <outlet property="highTempLabel" destination="j5O-Zm-Ikf" id="EPb-wz-rQ2"/>
+                                            <outlet property="lowTempLabel" destination="odc-8q-VOA" id="ETy-2u-wlM"/>
+                                            <outlet property="weatherTypeImage" destination="NnC-v4-9Jz" id="YKU-nU-xyo"/>
+                                            <outlet property="weatherTypeLabel" destination="Lxb-z8-FNQ" id="pdR-XY-jNZ"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
@@ -172,7 +179,7 @@
                         <outlet property="currentConditionsLabel" destination="SkW-y6-LuX" id="h4y-pZ-Gqy"/>
                         <outlet property="currentTempLabel" destination="bTS-GJ-alK" id="buW-rq-FHq"/>
                         <outlet property="dateLabel" destination="HOc-UH-fic" id="HXB-hG-aep"/>
-                        <outlet property="forcastTableView" destination="ZP5-eS-4oA" id="xtv-GQ-UDf"/>
+                        <outlet property="forecastTableView" destination="ZP5-eS-4oA" id="4GU-0A-bSY"/>
                         <outlet property="locationLabel" destination="rN1-1z-mgk" id="P42-op-PmU"/>
                     </connections>
                 </viewController>
