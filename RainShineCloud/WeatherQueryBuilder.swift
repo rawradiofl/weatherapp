@@ -17,7 +17,7 @@ struct WeatherQueryBuilder {
     private let lonClause = "&lon="
     private let AppID = "&appid="
     private let APIKey = "163e96e02f0eaddd4fc8cb94cd9f41b3"
-    private let forecastDays = 7
+    private let forecastDays = 14
     
     var latitude: Double?
     var longitude: Double?

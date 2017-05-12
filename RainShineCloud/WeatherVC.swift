@@ -78,8 +78,12 @@ class WeatherVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                     if let list = dict["list"] as? [Dictionary<String, Any>] {
                         for obj in list {
                             let forecast = Forecast(forecastDict: obj)
-                            self?.forecasts.append(forecast)
-                            //print(obj)
+                            if let theDate = forecast.date, theDate > Date() {
+                                if let count = self?.forecasts.count, count < 10 {
+                                    print(theDate)
+                                    self?.forecasts.append(forecast)
+                                }
+                            }
                         }
                     }
                 }

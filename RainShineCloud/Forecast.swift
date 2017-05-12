@@ -42,6 +42,9 @@ class Forecast {
         }
         return _lowTemp
     }
+    
+    var date: Date?
+    
 
     init(forecastDict: Dictionary<String, Any>) {
         if let temperature = forecastDict["temp"] as? Dictionary<String, Any> {
@@ -60,9 +63,9 @@ class Forecast {
             }
         }
         
-        if let date = forecastDict["dt"] as? Double {
-            let unixConvertedDate = Date(timeIntervalSince1970: date)
-            print(unixConvertedDate)
+        if let theDate = forecastDict["dt"] as? Double {
+            let unixConvertedDate = Date(timeIntervalSince1970: theDate)
+            date = unixConvertedDate
             _dayOfWeek = unixConvertedDate.dayOfTheWeek()
         }
     }
